@@ -10,8 +10,6 @@ To load the library in your game, simply use:
 local Kane = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Kane-UI-Library/main/source.lua"))()
 ```
 
-Replace the URL with the actual link to your source file.
-
 ## Creating a Window
 
 Create a new UI window by calling:
