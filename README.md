@@ -110,6 +110,22 @@ Tab:AddLabel({
 - TextColor: (Color3) The color of the label's text.
 - TextSize: (number) The size of the label’s text.
 
+## Creating a Notification
+
+```lua
+UILibrary:MakeNotification({
+    Title = "Notification Title",
+    Text = "Notification Description",
+    Icon = "rbxassetid://1234567890",
+    Duration = 5
+})
+```
+
+- Title: (string) The title of the notification.
+- Text: (string) The message displayed in the notification.
+- Icon: (string) The asset ID for the notification icon (optional).
+- Duration: (number) How long (in seconds) the notification stays on screen (optional).
+
 ## Destroying the Interface
 
 When you need to remove the UI from the game, call:
