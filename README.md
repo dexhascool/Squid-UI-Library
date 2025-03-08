@@ -113,7 +113,7 @@ Tab:AddLabel({
 ## Creating a Notification
 
 ```lua
-UILibrary:MakeNotification({
+Kane:MakeNotification({
     Title = "Notification Title",
     Text = "Notification Description",
     Icon = "rbxassetid://1234567890",
