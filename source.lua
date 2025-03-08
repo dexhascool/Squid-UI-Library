@@ -364,6 +364,7 @@ function UILibrary:MakeWindow(config)
             labelUI.TextColor3 = labelConfig.TextColor or Color3.fromRGB(0, 0, 0)
             labelUI.TextSize = labelConfig.TextSize or 14
             labelUI.TextWrapped = true
+            labelUI.ClipsDescendants = true
             return label
         end
 
