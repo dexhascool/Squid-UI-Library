@@ -365,9 +365,10 @@ function UILibrary:MakeWindow(config)
             labelUI.TextSize = labelConfig.TextSize or 14
             labelUI.TextWrapped = true
             labelUI.ClipsDescendants = true
-
-            labelUI:GetPropertyChangedSignal("TextBounds"):Connect(function()
-                local newHeight = math.ceil(labelUI.TextBounds.Y) + 5
+        
+            spawn(function()
+                wait(0.2)
+                local newHeight = math.ceil(labelUI.TextBounds.Y) + 10
                 labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, newHeight)
             end)
         
