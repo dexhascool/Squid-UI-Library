@@ -1,5 +1,6 @@
 --// Variables
 local TextService = game:GetService("TextService")
+local StarterGui = game:GetService("StarterGui")
 
 math.randomseed(os.time())
 
@@ -400,7 +401,6 @@ end
 
 -- MakeNotification Function
 function UILibrary:MakeNotification(config)
-    local StarterGui = game:GetService("StarterGui")
     StarterGui:SetCore("SendNotification", {
         Title = config.Title or "Notification Title",
         Text = config.Text or "Notification Description",
