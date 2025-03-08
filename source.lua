@@ -356,27 +356,14 @@ function UILibrary:MakeWindow(config)
             local labelUI = Instance.new("TextLabel")
             labelUI.Name = randomString(8)
             labelUI.Parent = tab.Content
-            -- Use the provided size if available, else default to width=1 and height=25
-            if labelConfig.Size then
-                labelUI.Size = labelConfig.Size
-            else
-                labelUI.Size = UDim2.new(1, 0, 0, 25)
-            end
+            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, 25)
             labelUI.BackgroundColor3 = labelConfig.BackgroundColor or Color3.fromRGB(255, 255, 255)
             labelUI.BorderColor3 = labelConfig.BorderColor or Color3.fromRGB(0, 0, 0)
             labelUI.Font = labelConfig.Font or Enum.Font.SourceSans
             labelUI.Text = labelConfig.Text or label.Name
             labelUI.TextColor3 = labelConfig.TextColor or Color3.fromRGB(0, 0, 0)
             labelUI.TextSize = labelConfig.TextSize or 14
-
-            spawn(function()
-                wait(0.1)
-                local desiredHeight = labelUI.TextBounds.Y
-                local currentHeight = labelUI.AbsoluteSize.Y
-                if desiredHeight > currentHeight then
-                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, desiredHeight)
-                end
-            end)
+            labelUI.TextWrapped = true
             return label
         end
 
