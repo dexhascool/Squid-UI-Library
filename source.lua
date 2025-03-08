@@ -364,13 +364,15 @@ function UILibrary:MakeWindow(config)
             labelUI.TextColor3 = labelConfig.TextColor or Color3.fromRGB(0, 0, 0)
             labelUI.TextSize = labelConfig.TextSize or 14
             labelUI.TextWrapped = true
-            labelUI.ClipsDescendants = true
+
+            spawn(function()
+                wait(0.1)
+                local newHeight = labelUI.TextBounds.Y
+                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, newHeight)
+            end)
+        
             return label
         end
-
-        table.insert(window.Tabs, tab)
-        return tab
-    end
 
     table.insert(self.Windows, window)
     return window
