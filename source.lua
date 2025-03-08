@@ -1,4 +1,6 @@
 --// Variables
+local TextService = game:GetService("TextService")
+
 math.randomseed(os.time())
 
 local function randomString(length)
@@ -356,8 +358,7 @@ function UILibrary:MakeWindow(config)
             local labelUI = Instance.new("TextLabel")
             labelUI.Name = randomString(8)
             labelUI.Parent = tab.Content
-            local initialHeight = (labelConfig.Size and labelConfig.Size.Y.Offset) or 25
-            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, initialHeight)
+            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, 25)
             labelUI.BackgroundColor3 = labelConfig.BackgroundColor or Color3.fromRGB(255, 255, 255)
             labelUI.BorderColor3 = labelConfig.BorderColor or Color3.fromRGB(0, 0, 0)
             labelUI.Font = labelConfig.Font or Enum.Font.SourceSans
@@ -365,15 +366,21 @@ function UILibrary:MakeWindow(config)
             labelUI.TextColor3 = labelConfig.TextColor or Color3.fromRGB(0, 0, 0)
             labelUI.TextSize = labelConfig.TextSize or 14
             labelUI.TextWrapped = true
-            labelUI.ClipsDescendants = true
         
-            labelUI:GetPropertyChangedSignal("Text"):Connect(function()
-                if labelUI.TextBounds.Y > initialHeight then
-                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, initialHeight * 2)
-                else
-                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, initialHeight)
-                end
-            end)
+            local padding = Instance.new("UIPadding")
+            padding.Parent = labelUI
+            padding.PaddingLeft = UDim.new(0, 5)
+            padding.PaddingRight = UDim.new(0, 5)
+    
+            local defaultHeight = 25
+        
+            local width = labelUI.AbsoluteSize.X
+            local calculatedSize = TextService:GetTextSize(labelUI.Text, labelUI.TextSize, labelUI.Font, Vector2.new(width, math.huge))
+            if calculatedSize.Y > defaultHeight then
+                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, calculatedSize.Y * 1.5)
+            else
+                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, defaultHeight)
+            end
         
             return label
         end
