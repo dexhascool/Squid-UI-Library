@@ -352,6 +352,7 @@ function UILibrary:MakeWindow(config)
             return slider
         end
 
+        -- Function to add a label element to the tab with dynamic resizing using TextBounds.
         function tab:AddLabel(labelConfig)
             local label = {}
             label.Name = labelConfig.Name or "Label"
@@ -373,14 +374,18 @@ function UILibrary:MakeWindow(config)
             padding.PaddingRight = UDim.new(0, 5)
     
             local defaultHeight = 25
-        
-            local width = labelUI.AbsoluteSize.X
-            local calculatedSize = TextService:GetTextSize(labelUI.Text, labelUI.TextSize, labelUI.Font, Vector2.new(width, math.huge))
-            if calculatedSize.Y > defaultHeight then
-                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, calculatedSize.Y * 1.5)
-            else
-                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, defaultHeight)
+            local function resizeLabel()
+                local width = labelUI.AbsoluteSize.X
+                local calculatedSize = TextService:GetTextSize(labelUI.Text, labelUI.TextSize, labelUI.Font, Vector2.new(width, math.huge))
+                if calculatedSize.Y > defaultHeight then
+                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, calculatedSize.Y * 1.5)
+                else
+                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, defaultHeight)
+                end
             end
+    
+            labelUI:GetPropertyChangedSignal("Text"):Connect(resizeLabel)
+            delay(0.2, resizeLabel)
         
             return label
         end
@@ -391,6 +396,17 @@ function UILibrary:MakeWindow(config)
 
     table.insert(self.Windows, window)
     return window
+end
+
+-- MakeNotification Function
+function UILibrary:MakeNotification(config)
+    local StarterGui = game:GetService("StarterGui")
+    StarterGui:SetCore("SendNotification", {
+        Title = config.Title or "Notification Title",
+        Text = config.Text or "Notification Description",
+        Icon = config.Icon or "",
+        Duration = config.Duration or 5
+    })
 end
 
 return UILibrary
