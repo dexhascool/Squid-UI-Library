@@ -356,7 +356,8 @@ function UILibrary:MakeWindow(config)
             local labelUI = Instance.new("TextLabel")
             labelUI.Name = randomString(8)
             labelUI.Parent = tab.Content
-            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, 25)
+            local initialHeight = (labelConfig.Size and labelConfig.Size.Y.Offset) or 25
+            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, initialHeight)
             labelUI.BackgroundColor3 = labelConfig.BackgroundColor or Color3.fromRGB(255, 255, 255)
             labelUI.BorderColor3 = labelConfig.BorderColor or Color3.fromRGB(0, 0, 0)
             labelUI.Font = labelConfig.Font or Enum.Font.SourceSans
@@ -365,12 +366,15 @@ function UILibrary:MakeWindow(config)
             labelUI.TextSize = labelConfig.TextSize or 14
             labelUI.TextWrapped = true
             labelUI.ClipsDescendants = true
-
+        
             labelUI:GetPropertyChangedSignal("Text"):Connect(function()
-                local newHeight = math.ceil(labelUI.TextBounds.Y)
-                labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, newHeight + 35)
+                if labelUI.TextBounds.Y > initialHeight then
+                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, initialHeight * 2)
+                else
+                    labelUI.Size = UDim2.new(labelUI.Size.X.Scale, labelUI.Size.X.Offset, 0, initialHeight)
+                end
             end)
-
+        
             return label
         end
 
