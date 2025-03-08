@@ -138,7 +138,7 @@ function UILibrary:MakeWindow(config)
     window.TabFrame = tabFrame
     window.TopBar = topBar
 
-    -- Destroy method (re-added thank god)
+    -- Destroy method
     function window:Destroy()
         if self.ScreenGui then
             self.ScreenGui:Destroy()
@@ -153,7 +153,6 @@ function UILibrary:MakeWindow(config)
         tab.Buttons = {}
         tab.Config = tabConfig
 
-        -- Create a tab button (e.g. "Tab 1", "Tab 2", etc.)
         local tabButton = Instance.new("TextButton")
         tabButton.Name = randomString(8)
         tabButton.Parent = window.TabFrame
@@ -166,7 +165,6 @@ function UILibrary:MakeWindow(config)
         tabButton.TextSize = 14
         tab.ButtonTabButton = tabButton
 
-        -- Create a container for this tab's content (ScrollingFrame)
         local tabContent = Instance.new("ScrollingFrame")
         tabContent.Name = randomString(8)
         tabContent.Parent = window.ContentFrame
@@ -186,7 +184,6 @@ function UILibrary:MakeWindow(config)
             tabContent.CanvasSize = UDim2.new(0, 0, 0, tabContentLayout.AbsoluteContentSize.Y)
         end)
 
-        -- Tab functionality
         tabButton.MouseButton1Click:Connect(function()
             for _, t in pairs(window.Tabs) do
                 if t.Content then
@@ -196,7 +193,6 @@ function UILibrary:MakeWindow(config)
             tabContent.Visible = true
         end)
 
-        -- Function to add a button to the tab
         function tab:AddButton(buttonConfig)
             local button = {}
             button.Name = buttonConfig.Name or "Button"
@@ -224,7 +220,6 @@ function UILibrary:MakeWindow(config)
             return button
         end
 
-        -- Function to add a toggle element to the tab
         function tab:AddToggle(toggleConfig)
             local toggle = {}
             toggle.Name = toggleConfig.Name or "Toggle"
@@ -275,7 +270,6 @@ function UILibrary:MakeWindow(config)
             return toggle
         end
 
-        -- Function to add a slider element to the tab
         function tab:AddSlider(sliderConfig)
             local slider = {}
             slider.Name = sliderConfig.Name or "Slider"
@@ -356,14 +350,17 @@ function UILibrary:MakeWindow(config)
             return slider
         end
 
-        -- Function to add a label element to the tab
         function tab:AddLabel(labelConfig)
             local label = {}
             label.Name = labelConfig.Name or "Label"
             local labelUI = Instance.new("TextLabel")
             labelUI.Name = randomString(8)
             labelUI.Parent = tab.Content
-            labelUI.Size = labelConfig.Size or UDim2.new(1, 0, 0, 25)
+            if labelConfig.Size then
+                labelUI.Size = labelConfig.Size
+            else
+                labelUI.AutomaticSize = Enum.AutomaticSize.XY
+            end
             labelUI.BackgroundColor3 = labelConfig.BackgroundColor or Color3.fromRGB(255, 255, 255)
             labelUI.BorderColor3 = labelConfig.BorderColor or Color3.fromRGB(0, 0, 0)
             labelUI.Font = labelConfig.Font or Enum.Font.SourceSans
