@@ -16,15 +16,13 @@ local function addHoverTween(inst, targetColor)
 	end)
 end
 
--- Window Methods
 UILib.WindowMethods = {}
 
-function UILib.WindowMethods:AddTab(options)
+function UILib.WindowMethods:MakeTab(options)
 	options = options or {}
 	local tab = {}
 	tab.Name = options.Name or "Tab"
-	
-	-- Create the Tab button
+
 	tab.TabButton = Instance.new("TextButton")
 	tab.TabButton.Name = options.Name or "Tab1"
 	tab.TabButton.Parent = self.Tablist
@@ -37,8 +35,7 @@ function UILib.WindowMethods:AddTab(options)
 	tab.TabButton.TextColor3 = Color3.fromRGB(230,230,230)
 	tab.TabButton.TextSize = 15
 	addHoverTween(tab.TabButton, Color3.fromRGB(125,25,26))
-	
-	-- Create the active Indicator
+
 	tab.Indicator = Instance.new("Frame")
 	tab.Indicator.Name = "Indicator"
 	tab.Indicator.Parent = tab.TabButton
@@ -47,8 +44,7 @@ function UILib.WindowMethods:AddTab(options)
 	tab.Indicator.Position = UDim2.new(0,-10,0,1)
 	tab.Indicator.Size = UDim2.new(0,10,1,-2)
 	tab.Indicator.Visible = false
-	
-	-- Create the Tab's content container in the window's Contentframe
+
 	tab.Content = Instance.new("Frame")
 	tab.Content.Name = "TabContent"
 	tab.Content.Parent = self.Contentframe
@@ -79,23 +75,20 @@ function UILib.WindowMethods:AddTab(options)
 	return tab
 end
 
--- Tab Methods
 UILib.TabMethods = {}
 
-function UILib.TabMethods:AddSection(options)
+function UILib.TabMethods:MakeSection(options)
 	options = options or {}
 	local section = {}
 	section.Name = options.Name or "Section One"
-	
-	-- Create Sectionframe
+
 	section.Frame = Instance.new("Frame")
 	section.Frame.Name = "Sectionframe"
 	section.Frame.Parent = self.Content
 	section.Frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
 	section.Frame.BorderColor3 = Color3.fromRGB(0,0,0)
 	section.Frame.Size = UDim2.new(1,0,0,95)
-	
-	-- Section title label
+
 	section.Sectiontitlelabel = Instance.new("TextLabel")
 	section.Sectiontitlelabel.Name = "Sectiontitlelabel"
 	section.Sectiontitlelabel.Parent = section.Frame
@@ -106,8 +99,7 @@ function UILib.TabMethods:AddSection(options)
 	section.Sectiontitlelabel.Text = section.Name
 	section.Sectiontitlelabel.TextColor3 = Color3.fromRGB(230,230,230)
 	section.Sectiontitlelabel.TextSize = 15
-	
-	-- Content container inside the section
+
 	section.Content = Instance.new("Frame")
 	section.Content.Name = "Contentframe"
 	section.Content.Parent = section.Frame
@@ -129,7 +121,6 @@ function UILib.TabMethods:AddSection(options)
 	return section
 end
 
--- Common Element Methods
 UILib.CommonElementMethods = {}
 
 function UILib.CommonElementMethods:AddButton(options)
@@ -145,7 +136,7 @@ function UILib.CommonElementMethods:AddButton(options)
 	button.TextSize = 15
 	button.TextXAlignment = Enum.TextXAlignment.Left
 	button.AutoButtonColor = false
-	button.Parent = self.Content
+	button.Parent = self.Content 
 	local pad = Instance.new("UIPadding")
 	pad.Parent = button
 	pad.PaddingLeft = UDim.new(0,10)
@@ -353,7 +344,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	return sliderFrame
 end
 
--- Assign Common Methods to Tab and Section Methods
 UILib.TabMethods.AddButton = UILib.CommonElementMethods.AddButton
 UILib.TabMethods.AddToggle = UILib.CommonElementMethods.AddToggle
 UILib.TabMethods.AddSlider = UILib.CommonElementMethods.AddSlider
@@ -363,19 +353,16 @@ UILib.SectionMethods.AddButton = UILib.CommonElementMethods.AddButton
 UILib.SectionMethods.AddToggle = UILib.CommonElementMethods.AddToggle
 UILib.SectionMethods.AddSlider = UILib.CommonElementMethods.AddSlider
 
--- Lib Entry Point
-function UILib:AddWindow(options)
+function UILib:MakeWindow(options)
 	options = options or {}
 	local window = {}
 	window.Name = options.Name or "Project Jellyfish"
-	
-	-- ScreenGui
+
 	local ScreenGui = Instance.new("ScreenGui")
 	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	window.ScreenGui = ScreenGui
-	
-	-- Mainframe
+
 	local Mainframe = Instance.new("Frame")
 	Mainframe.Name = "Mainframe"
 	Mainframe.Parent = ScreenGui
@@ -385,8 +372,7 @@ function UILib:AddWindow(options)
 	Mainframe.Position = UDim2.new(0.5,0,0.5,0)
 	Mainframe.Size = UDim2.new(0,475,0,335)
 	window.Mainframe = Mainframe
-	
-	-- Topbar
+
 	local Topbar = Instance.new("Frame")
 	Topbar.Name = "Topbar"
 	Topbar.Parent = Mainframe
@@ -394,8 +380,7 @@ function UILib:AddWindow(options)
 	Topbar.BorderColor3 = Color3.fromRGB(0,0,0)
 	Topbar.Size = UDim2.new(1,0,0,35)
 	window.Topbar = Topbar
-	
-	-- Titlelabel
+
 	local Titlelabel = Instance.new("TextLabel")
 	Titlelabel.Name = "Titlelabel"
 	Titlelabel.Parent = Topbar
@@ -413,8 +398,7 @@ function UILib:AddWindow(options)
 	pad.Parent = Titlelabel
 	pad.PaddingLeft = UDim.new(0,10)
 	window.Titlelabel = Titlelabel
-	
-	-- Tablist
+
 	local Tablist = Instance.new("Frame")
 	Tablist.Name = "Tablist"
 	Tablist.Parent = Mainframe
@@ -433,7 +417,6 @@ function UILib:AddWindow(options)
 	list.Padding = UDim.new(0,4)
 	window.Tablist = Tablist
 	
-	-- Contentframe
 	local Contentframe = Instance.new("ScrollingFrame")
 	Contentframe.Name = "Contentframe"
 	Contentframe.Parent = Mainframe
