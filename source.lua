@@ -22,7 +22,6 @@ function UILib.WindowMethods:MakeTab(options)
 	options = options or {}
 	local tab = {}
 	tab.Name = options.Name or "Tab"
-
 	tab.TabButton = Instance.new("TextButton")
 	tab.TabButton.Name = options.Name or "Tab1"
 	tab.TabButton.Parent = self.Tablist
@@ -35,7 +34,6 @@ function UILib.WindowMethods:MakeTab(options)
 	tab.TabButton.TextColor3 = Color3.fromRGB(230,230,230)
 	tab.TabButton.TextSize = 15
 	addHoverTween(tab.TabButton, Color3.fromRGB(125,25,26))
-
 	tab.Indicator = Instance.new("Frame")
 	tab.Indicator.Name = "Indicator"
 	tab.Indicator.Parent = tab.TabButton
@@ -44,22 +42,18 @@ function UILib.WindowMethods:MakeTab(options)
 	tab.Indicator.Position = UDim2.new(0,-10,0,1)
 	tab.Indicator.Size = UDim2.new(0,10,1,-2)
 	tab.Indicator.Visible = false
-
 	tab.Content = Instance.new("Frame")
 	tab.Content.Name = "TabContent"
 	tab.Content.Parent = self.Contentframe
 	tab.Content.BackgroundTransparency = 1
 	tab.Content.Size = UDim2.new(1,0,1,0)
 	tab.Content.Visible = false
-
 	local uiList = Instance.new("UIListLayout")
 	uiList.Parent = tab.Content
 	uiList.SortOrder = Enum.SortOrder.LayoutOrder
 	uiList.Padding = UDim.new(0,6)
-
 	tab.Elements = {}
 	table.insert(self.Tabs, tab)
-
 	tab.TabButton.MouseButton1Click:Connect(function()
 		for _, t in ipairs(self.Tabs) do
 			t.Content.Visible = false
@@ -70,7 +64,6 @@ function UILib.WindowMethods:MakeTab(options)
 		tab.Content.Visible = true
 		tab.Indicator.Visible = true
 	end)
-
 	setmetatable(tab, {__index = UILib.TabMethods})
 	return tab
 end
@@ -81,14 +74,12 @@ function UILib.TabMethods:MakeSection(options)
 	options = options or {}
 	local section = {}
 	section.Name = options.Name or "Section One"
-
 	section.Frame = Instance.new("Frame")
 	section.Frame.Name = "Sectionframe"
 	section.Frame.Parent = self.Content
 	section.Frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
 	section.Frame.BorderColor3 = Color3.fromRGB(0,0,0)
 	section.Frame.Size = UDim2.new(1,0,0,95)
-
 	section.Sectiontitlelabel = Instance.new("TextLabel")
 	section.Sectiontitlelabel.Name = "Sectiontitlelabel"
 	section.Sectiontitlelabel.Parent = section.Frame
@@ -99,7 +90,6 @@ function UILib.TabMethods:MakeSection(options)
 	section.Sectiontitlelabel.Text = section.Name
 	section.Sectiontitlelabel.TextColor3 = Color3.fromRGB(230,230,230)
 	section.Sectiontitlelabel.TextSize = 15
-
 	section.Content = Instance.new("Frame")
 	section.Content.Name = "Contentframe"
 	section.Content.Parent = section.Frame
@@ -114,7 +104,7 @@ function UILib.TabMethods:MakeSection(options)
 	list.SortOrder = Enum.SortOrder.LayoutOrder
 	list.Padding = UDim.new(0,4)
 	list:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		section.Frame.Size = UDim2.new(1,0,0, 25 + list.AbsoluteContentSize.Y + 6)
+		section.Frame.Size = UDim2.new(1,0,0,25 + list.AbsoluteContentSize.Y + 6)
 	end)
 	section.Elements = {}
 	setmetatable(section, {__index = UILib.SectionMethods})
@@ -136,7 +126,7 @@ function UILib.CommonElementMethods:AddButton(options)
 	button.TextSize = 15
 	button.TextXAlignment = Enum.TextXAlignment.Left
 	button.AutoButtonColor = false
-	button.Parent = self.Content 
+	button.Parent = self.Content
 	local pad = Instance.new("UIPadding")
 	pad.Parent = button
 	pad.PaddingLeft = UDim.new(0,10)
@@ -186,7 +176,6 @@ function UILib.CommonElementMethods:AddToggle(options)
 	toggleButton.TextColor3 = Color3.fromRGB(0,0,0)
 	toggleButton.TextSize = 14
 	toggleButton.TextTransparency = 1
-
 	toggleButton.MouseEnter:Connect(function()
 		if not options.Default then
 			local tween = TweenService:Create(toggleButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(125,25,26)})
@@ -201,7 +190,6 @@ function UILib.CommonElementMethods:AddToggle(options)
 			toggleButton.BackgroundColor3 = Color3.fromRGB(126,25,27)
 		end
 	end)
-	
 	local toggled = options.Default or false
 	if toggled then
 		toggleButton.BackgroundColor3 = Color3.fromRGB(126,25,27)
@@ -226,7 +214,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	sliderFrame.BorderColor3 = Color3.fromRGB(0,0,0)
 	sliderFrame.Size = UDim2.new(1,0,0,50)
 	sliderFrame.Parent = self.Content
-	
 	local titleLabel = Instance.new("TextLabel")
 	titleLabel.Name = "Titlelabel"
 	titleLabel.Parent = sliderFrame
@@ -243,7 +230,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	local pad = Instance.new("UIPadding")
 	pad.Parent = titleLabel
 	pad.PaddingLeft = UDim.new(0,10)
-	
 	local valueLabel = Instance.new("TextLabel")
 	valueLabel.Name = "Valuelabel"
 	valueLabel.Parent = sliderFrame
@@ -259,7 +245,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	valueLabel.TextColor3 = Color3.fromRGB(230,230,230)
 	valueLabel.TextSize = 15
 	valueLabel.Parent = sliderFrame
-	
 	local valueBox = Instance.new("TextBox")
 	valueBox.Name = "Valuebox"
 	valueBox.Parent = sliderFrame
@@ -278,7 +263,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	local pad2 = Instance.new("UIPadding")
 	pad2.Parent = valueBox
 	pad2.PaddingRight = UDim.new(0,10)
-	
 	local sliderBar = Instance.new("Frame")
 	sliderBar.Name = "Sliderbar"
 	sliderBar.Parent = sliderFrame
@@ -286,7 +270,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	sliderBar.BorderColor3 = Color3.fromRGB(0,0,0)
 	sliderBar.Position = UDim2.new(0,15,0,30)
 	sliderBar.Size = UDim2.new(1,-30,0,10)
-	
 	local fillBar = Instance.new("Frame")
 	fillBar.Name = "Fillbar"
 	fillBar.Parent = sliderBar
@@ -296,7 +279,6 @@ function UILib.CommonElementMethods:AddSlider(options)
 	local maxVal = options.Max or 10
 	local initPercent = (defaultVal - minVal) / (maxVal - minVal)
 	fillBar.Size = UDim2.new(initPercent,0,1,0)
-	
 	local increment = options.Increment or 1
 	local function updateSlider(x)
 		local relX = math.clamp(x - sliderBar.AbsolutePosition.X, 0, sliderBar.AbsoluteSize.X)
@@ -344,25 +326,45 @@ function UILib.CommonElementMethods:AddSlider(options)
 	return sliderFrame
 end
 
+function UILib.CommonElementMethods:AddLabel(options)
+	options = options or {}
+	local label = Instance.new("TextLabel")
+	label.Name = options.Name or "Label"
+	label.BackgroundColor3 = Color3.fromRGB(50,50,50)
+	label.BorderColor3 = Color3.fromRGB(0,0,0)
+	label.Size = UDim2.new(1,0,0,22)
+	label.Font = Enum.Font.Ubuntu
+	label.Text = options.Text or ""
+	label.TextColor3 = Color3.fromRGB(230,230,230)
+	label.TextSize = 15
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.Parent = self.Content
+	local pad = Instance.new("UIPadding")
+	pad.Parent = label
+	pad.PaddingLeft = UDim.new(0,10)
+	table.insert(self.Elements, label)
+	return label
+end
+
 UILib.TabMethods.AddButton = UILib.CommonElementMethods.AddButton
 UILib.TabMethods.AddToggle = UILib.CommonElementMethods.AddToggle
 UILib.TabMethods.AddSlider = UILib.CommonElementMethods.AddSlider
+UILib.TabMethods.AddLabel = UILib.CommonElementMethods.AddLabel
 
 UILib.SectionMethods = {}
 UILib.SectionMethods.AddButton = UILib.CommonElementMethods.AddButton
 UILib.SectionMethods.AddToggle = UILib.CommonElementMethods.AddToggle
 UILib.SectionMethods.AddSlider = UILib.CommonElementMethods.AddSlider
+UILib.SectionMethods.AddLabel = UILib.CommonElementMethods.AddLabel
 
 function UILib:MakeWindow(options)
 	options = options or {}
 	local window = {}
 	window.Name = options.Name or "Project Jellyfish"
-
 	local ScreenGui = Instance.new("ScreenGui")
 	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	window.ScreenGui = ScreenGui
-
 	local Mainframe = Instance.new("Frame")
 	Mainframe.Name = "Mainframe"
 	Mainframe.Parent = ScreenGui
@@ -372,7 +374,6 @@ function UILib:MakeWindow(options)
 	Mainframe.Position = UDim2.new(0.5,0,0.5,0)
 	Mainframe.Size = UDim2.new(0,475,0,335)
 	window.Mainframe = Mainframe
-
 	local Topbar = Instance.new("Frame")
 	Topbar.Name = "Topbar"
 	Topbar.Parent = Mainframe
@@ -380,7 +381,6 @@ function UILib:MakeWindow(options)
 	Topbar.BorderColor3 = Color3.fromRGB(0,0,0)
 	Topbar.Size = UDim2.new(1,0,0,35)
 	window.Topbar = Topbar
-
 	local Titlelabel = Instance.new("TextLabel")
 	Titlelabel.Name = "Titlelabel"
 	Titlelabel.Parent = Topbar
@@ -398,7 +398,6 @@ function UILib:MakeWindow(options)
 	pad.Parent = Titlelabel
 	pad.PaddingLeft = UDim.new(0,10)
 	window.Titlelabel = Titlelabel
-
 	local Tablist = Instance.new("Frame")
 	Tablist.Name = "Tablist"
 	Tablist.Parent = Mainframe
@@ -416,7 +415,6 @@ function UILib:MakeWindow(options)
 	list.SortOrder = Enum.SortOrder.LayoutOrder
 	list.Padding = UDim.new(0,4)
 	window.Tablist = Tablist
-	
 	local Contentframe = Instance.new("ScrollingFrame")
 	Contentframe.Name = "Contentframe"
 	Contentframe.Parent = Mainframe
@@ -429,7 +427,6 @@ function UILib:MakeWindow(options)
 	Contentframe.CanvasSize = UDim2.new(0,0,1,-41)
 	Contentframe.ScrollBarThickness = 6
 	window.Contentframe = Contentframe
-
 	do
 		local dragging = false
 		local dragStart, startPos
@@ -452,7 +449,6 @@ function UILib:MakeWindow(options)
 			end
 		end)
 	end
-	
 	window.Tabs = {}
 	setmetatable(window, {__index = UILib.WindowMethods})
 	return window
