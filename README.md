@@ -1,13 +1,13 @@
-# Kane-UI-Library
+# Squid-UI-Library
 
-This documentation is for the stable release of **Kane UI Library**. It provides a simple and lightweight way to create custom in-game UIs for your script projects.
+This documentation is for the stable release of **Squid UI Library**. It provides a simple and lightweight way to create custom in-game UIs for your script projects.
 
 ## Booting the Library
 
 To load the library in your game, simply use:
 
 ```lua
-local Kane = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonious-jaha/Kane-UI-Library/main/source.lua"))()
+local Squid = loadstring(game:HttpGet("https://raw.githubusercontent.com/dexhascool/Squid-UI-Library/main/source.lua"))()
 ```
 
 ## Creating a Window
@@ -15,7 +15,7 @@ local Kane = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelonio
 Create a new UI window by calling:
 
 ```lua
-local Window = Kane:MakeWindow({ Name = "My Custom UI" })
+local Window = Squid:MakeWindow({ Name = "My Custom UI" })
 ```
 
 - Name: (string) The title of the UI window.
@@ -113,7 +113,7 @@ Tab:AddLabel({
 ## Creating a Notification
 
 ```lua
-Kane:MakeNotification({
+Squid:MakeNotification({
     Title = "Notification Title",
     Text = "Notification Description",
     Icon = "rbxassetid://1234567890",
@@ -131,7 +131,7 @@ Kane:MakeNotification({
 When you need to remove the UI from the game, call:
 
 ```lua
-Kane:Destroy()
+Squid:Destroy()
 ```
 
 This will clean up and remove all UI elements associated with the window.
