@@ -362,7 +362,7 @@ function UILib:MakeWindow(options)
 	local window = {}
 	window.Name = options.Name or "Project Jellyfish"
 	local ScreenGui = Instance.new("ScreenGui")
-	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("CoreGui")
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	window.ScreenGui = ScreenGui
 	local Mainframe = Instance.new("Frame")
